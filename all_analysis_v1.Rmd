@@ -1,0 +1,573 @@
+---
+author: "Keerthana Jagadeesh"
+date: "24 June 2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Vendor Survey Analysis 
+
+This document goes through the analysis steps for the vendor survey data.
+
+The in-detail summaries of all the questions were done in stata, and further analysis is shown here. 
+??
+```{r, echo=FALSE}
+## import all the packages needed
+library(plyr)
+remove.packages("ggplot2") # Unisntall ggplot
+install.packages("ggplot2") # Install it again
+library(ggplot2)
+library(dplyr)
+library(readxl)
+source("http://pcwww.liv.ac.uk/~william/R/crosstab.r")
+
+## import the master dataset
+core_peri <- read_excel("C:/Users/kjagadeesh/Dropbox/hungry cities survey/data/med_master_v1/core_peri_master.xlsx")
+
+
+
+```
+## Core-peri by owner age and business tenure
+
+1 - outside bmp
+0 - inside bmp
+```{r, echo=FALSE}
+count(core_peri, 'outside_bmp')
+
+
+## owner age
+crosstab(core_peri, row.vars = "outside_bmp", col.vars = "age", type = "r", addmargins = FALSE, dec.places=0)
+```
+##Business years breakdown: 
+1 - Less than 1 year
+2 - 1 - 5 years
+3 - 5 - 10 years
+4 - 10 - 20 years
+5 - Greater than 20
+```{r, echo=FALSE}
+
+## biz tenure
+crosstab(core_peri, row.vars = "outside_bmp", col.vars = "biz_years", type = "r", addmargins = FALSE, dec.places=0)
+ 
+```
+## Land use - broad by owner age and business tenure
+```{r, echo=FALSE}
+count(core_peri, 'land_use')
+
+
+## owner age
+crosstab(core_peri, row.vars = "land_use", col.vars = "age", type = "r", addmargins = FALSE, dec.places=0)
+```
+##Business years breakdown: 
+1 - Less than 1 year
+2 - 1 - 5 years
+3 - 5 - 10 years
+4 - 10 - 20 years
+5 - Greater than 20
+```{r, echo=FALSE}
+
+## biz tenure
+crosstab(core_peri, row.vars = "land_use", col.vars = "biz_years", type = "r", addmargins = FALSE, dec.places=0)
+```
+## Detailed Land use - by owner age and business tenure
+```{r, echo=FALSE}
+count(core_peri, 'det_land_use')
+
+
+## owner age
+crosstab(core_peri, row.vars = "det_land_use", col.vars = "age", type = "r", addmargins = FALSE, dec.places=0)
+```
+##Business years breakdown: 
+1 - Less than 1 year
+2 - 1 - 5 years
+3 - 5 - 10 years
+4 - 10 - 20 years
+5 - Greater than 20
+```{r, echo=FALSE}
+
+## biz tenure
+crosstab(core_peri, row.vars = "det_land_use", col.vars = "biz_years", type = "r", addmargins = FALSE, dec.places=0)
+```
+## From place - by owner age and business tenure
+1 - this city
+2 - rural KAR
+3 - rural in another state or in country
+4 - another city in the country
+5 - another city in KAR
+```{r, echo=FALSE}
+count(core_peri, 'from_place')
+
+
+## owner age
+crosstab(core_peri, row.vars = "from_place", col.vars = "age", type = "r", addmargins = FALSE, dec.places=0)
+```
+##Business years breakdown: 
+1 - Less than 1 year
+2 - 1 - 5 years
+3 - 5 - 10 years
+4 - 10 - 20 years
+5 - Greater than 20
+```{r, echo=FALSE}
+
+## biz tenure
+crosstab(core_peri, row.vars = "from_place", col.vars = "biz_years", type = "r", addmargins = FALSE, dec.places=0) 
+```
+## Migrant Recency - by owner age and business tenure
+```{r, echo=FALSE}
+count(core_peri, 'migrant_rec')
+
+
+## owner age
+crosstab(core_peri, row.vars = "migrant_rec", col.vars = "age", type = "r", addmargins = FALSE, dec.places=0)
+```
+##Business years breakdown: 
+1 - Less than 1 year
+2 - 1 - 5 years
+3 - 5 - 10 years
+4 - 10 - 20 years
+5 - Greater than 20
+```{r, echo=FALSE}
+
+## biz tenure
+crosstab(core_peri, row.vars = "migrant_rec", col.vars = "biz_years", type = "r", addmargins = FALSE, dec.places=0) 
+```   
+## Education - by owner age and business tenure
+  //1	No formal education
+  //2	Some primary school (Between Class I-VIII) (but not completed)
+  //3	Primary school completed (Passed Class VIII)
+  //4	Some high school (Between Class IX-XVII) (but not completed)
+  //5	High school completed (Passed Class XII)
+  //6	University/college (but not completed degree)
+  //7	University/college completed
+```{r, echo=FALSE}
+count(core_peri, 'var_33')
+
+
+## owner age
+crosstab(core_peri, row.vars = "var_33", col.vars = "age", type = "r", addmargins = FALSE, dec.places=0)
+```
+##Business years breakdown: 
+1 - Less than 1 year
+2 - 1 - 5 years
+3 - 5 - 10 years
+4 - 10 - 20 years
+5 - Greater than 20
+```{r, echo=FALSE}
+
+## biz tenure
+crosstab(core_peri, row.vars = "var_33", col.vars = "biz_years", type = "r", addmargins = FALSE, dec.places=0) 
+``` 
+## Migrants (from_place) by detailed land use type 
+
+1 - this city
+2 - rural KAR
+3 - rural in another state or in country
+4 - another city in the country
+5 - another city in KAR
+```{r, echo=FALSE}
+
+## from_place by detailed land use type 
+crosstab(core_peri, row.vars = "det_land_use", col.vars = "from_place", type = "r", addmargins = FALSE,  dec.places=0)
+```
+## Migrants (from_place) by core-peri 
+
+1 - this city
+2 - rural KAR
+3 - rural in another state or in country
+4 - another city in the country
+5 - another city in KAR
+```{r, echo=FALSE}
+
+## from_place by detailed land use type 
+crosstab(core_peri, row.vars = "from_place", col.vars = "outside_bmp", type = "r", addmargins = FALSE, dec.places=0)
+```
+## Migrant recency by core-peri 
+1 - "Less than 2 years"
+2 - "More than 2 years and less than 5 years"
+3 - "More than 5 years and less than 10 years"
+4 - "More than 10 years and less than 15 years"
+5 - "More than 15 years and less than 20 years"
+6 - "More than 20 years and less than 25 years"
+7 - "More than 25"
+```{r, echo=FALSE}
+
+## from_place by detailed land use type 
+crosstab(core_peri, row.vars = "migrant_rec", col.vars = "outside_bmp", type = "r", addmargins = FALSE, dec.places= 0)
+```
+## Migrant recency by detailed land use 
+1 - "Less than 2 years"
+2 - "More than 2 years and less than 5 years"
+3 - "More than 5 years and less than 10 years"
+4 - "More than 10 years and less than 15 years"
+5 - "More than 15 years and less than 20 years"
+6 - "More than 20 years and less than 25 years"
+7 - "More than 25"
+```{r, echo=FALSE}
+
+## from_place by detailed land use type 
+crosstab(core_peri, row.vars = "migrant_rec", col.vars = "det_land_use", type = "r", addmargins = FALSE, dec.places= 0)
+```
+## Profits for all groups
+
+## Profit by location code
+```{r, echo= FALSE}
+
+# group_by(core_peri, location_code) %>%
+#   summarise(
+#     ##count = n(var_122),
+#     mean = mean(var_122, na.rm = TRUE),
+#     sd = sd(var_122, na.rm = TRUE)
+#   )
+
+loca <- ggplot(core_peri, aes(location_code, var_122))
+
+loca + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+##boxplot(var_122~location_code, data=core_peri, notch=TRUE,
+  ##main="Profit by location code", xlab="location codes", ylim = c(0, 30000))
+```
+## Profit by core-peri
+```{r, echo= FALSE}
+
+# group_by(core_peri, outside_bmp) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_122, na.rm = TRUE),
+#     sd = sd(var_122, na.rm = TRUE)
+#   )
+
+core <- ggplot(core_peri, aes(outside_bmp, var_122))
+
+core + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+##boxplot(var_122~outside_bmp, data=core_peri, notch=TRUE,
+  ##main="Profit by core-peri", xlab="core-peri", ylim = c(0, 30000))
+
+```
+## Profit by detailed land use
+```{r, echo= FALSE}
+
+# group_by(core_peri, det_land_use) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_122, na.rm = TRUE),
+#     sd = sd(var_122, na.rm = TRUE)
+#   )
+
+d_land <- ggplot(core_peri, aes(det_land_use, var_122))
+
+d_land + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+##boxplot(var_122~det_land_use, data=core_peri, notch=TRUE,
+  ##main="Profit by det_land_use", xlab="det_land_use", ylim = c(0, 30000))
+
+```
+## Profit by land use
+```{r, echo= FALSE}
+
+# group_by(core_peri, land_use) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_122, na.rm = TRUE),
+#     sd = sd(var_122, na.rm = TRUE)
+#   )
+
+land <- ggplot(core_peri, aes(land_use, var_122))
+
+land + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+##boxplot(var_122~det_land_use, data=core_peri, notch=TRUE,
+  ##main="Profit by land_use", xlab="land_use", ylim = c(0, 30000))
+
+```
+## Profit by from place
+```{r, echo= FALSE}
+
+# group_by(core_peri, from_place) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_122, na.rm = TRUE),
+#     sd = sd(var_122, na.rm = TRUE)
+#   )
+
+fromplace <- ggplot(core_peri, aes(from_place, var_122))
+
+fromplace + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+
+##boxplot(var_122~from_place, data=core_peri, notch=TRUE,
+  ##main="Profit by from place", xlab="from_place", ylim = c(0, 30000))
+
+```
+## Profit by migrant recency
+```{r, echo= FALSE}
+
+# group_by(core_peri, migrant_rec) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_122, na.rm = TRUE),
+#     sd = sd(var_122, na.rm = TRUE)
+#   )
+
+migrant_rec_box <- ggplot(core_peri, aes(migrant_rec, var_122))
+
+migrant_rec_box + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+##boxplot(var_122~migrant_rec, data=core_peri, notch=TRUE,
+  ##main="Profit by migrant recency", xlab="migrant recency", ylim = c(0, 30000))
+
+```
+## Profit by education
+```{r, echo= FALSE}
+
+# group_by(core_peri, var_33) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_122, na.rm = TRUE),
+#     sd = sd(var_122, na.rm = TRUE)
+#   )
+var_33_box <- ggplot(core_peri, aes(var_33, var_122))
+
+var_33_box + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+
+##boxplot(var_122~var_33, data=core_peri, notch=TRUE,
+  ##main="Profit by education", xlab="education", ylim = c(0, 30000))
+
+```
+## Startup capitals for all groups
+
+## Startup capital by location code
+```{r, echo= FALSE}
+
+# group_by(core_peri, location_code) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_82, na.rm = TRUE),
+#     sd = sd(var_82, na.rm = TRUE)
+#   )
+
+loca_s <- ggplot(core_peri, aes(location_code, var_82))
+
+loca_s + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+
+
+##boxplot(var_82~location_code, data=core_peri, notch=TRUE,
+  ##main="Startup capital by location code", xlab="location codes", ylim = c(0, 30000))
+```
+## Startup capital by core-peri
+```{r, echo= FALSE}
+
+# group_by(core_peri, outside_bmp) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_82, na.rm = TRUE),
+#     sd = sd(var_82, na.rm = TRUE)
+#   )
+
+core_s <- ggplot(core_peri, aes(outside_bmp, var_82))
+
+core_s + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+##boxplot(var_82~outside_bmp, data=core_peri, notch=TRUE,
+  ##main="Startup capital by core-peri", xlab="core-peri", ylim = c(0, 30000))
+
+```
+## Startup capital by detailed land use
+```{r, echo= FALSE}
+
+# group_by(core_peri, det_land_use) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_82, na.rm = TRUE),
+#     sd = sd(var_82, na.rm = TRUE)
+#   )
+
+d_land_s <- ggplot(core_peri, aes(det_land_use, var_82))
+
+d_land_s + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+##boxplot(var_82~det_land_use, data=core_peri, notch=TRUE,
+  ##main="Startup capital by det_land_use", xlab="det_land_use", ylim = c(0, 30000))
+
+```
+## Startup capital by land use
+```{r, echo= FALSE}
+
+# group_by(core_peri, land_use) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_82, na.rm = TRUE),
+#     sd = sd(var_82, na.rm = TRUE)
+#   )
+
+land_s <- ggplot(core_peri, aes(land_use, var_82))
+
+land_s + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+
+##boxplot(var_82~det_land_use, data=core_peri, notch=TRUE,
+  ##main="Startup capital by land_use", xlab="land_use", ylim = c(0, 30000))
+
+```
+## Startup capital by from place
+```{r, echo= FALSE}
+
+# group_by(core_peri, from_place) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_82, na.rm = TRUE),
+#     sd = sd(var_82, na.rm = TRUE)
+#   )
+
+from_place_s <- ggplot(core_peri, aes(from_place, var_82))
+
+from_place_s + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+
+##boxplot(var_82~from_place, data=core_peri, notch=TRUE,
+  ##main="Startup capital by from place", xlab="from_place", ylim = c(0, 30000))
+
+```
+## Startup capital by migrant recency
+```{r, echo= FALSE}
+
+# group_by(core_peri, migrant_rec) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_82, na.rm = TRUE),
+#     sd = sd(var_82, na.rm = TRUE)
+#   )
+
+migrant_rec_s <- ggplot(core_peri, aes(migrant_rec, var_82))
+
+migrant_rec_s + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+##boxplot(var_82~migrant_rec, data=core_peri, notch=TRUE,
+  ##main="Startup capital by migrant recency", xlab="migrant recency", ylim = c(0, 30000))
+
+```
+## Startup capital by education
+```{r, echo= FALSE}
+
+# group_by(core_peri, var_33) %>%
+#   summarise(
+#     count = n(),
+#     mean = mean(var_82, na.rm = TRUE),
+#     sd = sd(var_82, na.rm = TRUE)
+#   )
+
+education_s <- ggplot(core_peri, aes(var_33, var_82))
+
+education_s + geom_boxplot(outlier.colour = "red") + coord_flip()
+
+
+##boxplot(var_82~var_33, data=core_peri, notch=TRUE,
+  ##main="Startup capital by education", xlab="education", ylim = c(0, 30000))
+
+```
+<!-- ## Mod-startup capitals for all groups -->
+
+<!-- ## Mod-startup capital by location code -->
+<!-- ```{r, echo= FALSE} -->
+
+<!-- group_by(core_peri, location_code) %>% -->
+<!--   summarise( -->
+<!--     count = n(), -->
+<!--     mean = mean(mod_startup, na.rm = TRUE), -->
+<!--     sd = sd(mod_startup, na.rm = TRUE) -->
+<!--   ) -->
+
+<!-- boxplot(mod_startup~location_code, data=core_peri, notch=TRUE, -->
+<!--   main="Mod-startup capital by location code", xlab="location codes", ylim = c(0, 30000)) -->
+<!-- ``` -->
+<!-- ## Mod-startup capital by core-peri -->
+<!-- ```{r, echo= FALSE} -->
+
+<!-- group_by(core_peri, outside_bmp) %>% -->
+<!--   summarise( -->
+<!--     count = n(), -->
+<!--     mean = mean(mod_startup, na.rm = TRUE), -->
+<!--     sd = sd(mod_startup, na.rm = TRUE) -->
+<!--   ) -->
+
+<!-- boxplot(mod_startup~outside_bmp, data=core_peri, notch=TRUE, -->
+<!--   main="Mod-startup capital by core-peri", xlab="core-peri", ylim = c(0, 30000)) -->
+
+<!-- ``` -->
+<!-- ## Mod-startup capital by detailed land use -->
+<!-- ```{r, echo= FALSE} -->
+
+<!-- group_by(core_peri, det_land_use) %>% -->
+<!--   summarise( -->
+<!--     count = n(), -->
+<!--     mean = mean(mod_startup, na.rm = TRUE), -->
+<!--     sd = sd(mod_startup, na.rm = TRUE) -->
+<!--   ) -->
+
+<!-- boxplot(mod_startup~det_land_use, data=core_peri, notch=TRUE, -->
+<!--   main="Mod-startup capital by det_land_use", xlab="det_land_use", ylim = c(0, 30000)) -->
+
+<!-- ``` -->
+<!-- ## Mod-startup capital by land use -->
+<!-- ```{r, echo= FALSE} -->
+
+<!-- group_by(core_peri, land_use) %>% -->
+<!--   summarise( -->
+<!--     count = n(), -->
+<!--     mean = mean(mod_startup, na.rm = TRUE), -->
+<!--     sd = sd(mod_startup, na.rm = TRUE) -->
+<!--   ) -->
+
+<!-- boxplot(mod_startup~det_land_use, data=core_peri, notch=TRUE, -->
+<!--   main="Mod-startup capital by land_use", xlab="land_use", ylim = c(0, 30000)) -->
+
+<!-- ``` -->
+<!-- ## Mod-startup capital by from place -->
+<!-- ```{r, echo= FALSE} -->
+
+<!-- group_by(core_peri, from_place) %>% -->
+<!--   summarise( -->
+<!--     count = n(), -->
+<!--     mean = mean(mod_startup, na.rm = TRUE), -->
+<!--     sd = sd(mod_startup, na.rm = TRUE) -->
+<!--   ) -->
+
+<!-- boxplot(mod_startup~from_place, data=core_peri, notch=TRUE, -->
+<!--   main="Mod-startup capital by from place", xlab="from_place", ylim = c(0, 30000)) -->
+
+<!-- ``` -->
+<!-- ## Mod-startup capital by migrant recency -->
+<!-- ```{r, echo= FALSE} -->
+
+<!-- group_by(core_peri, migrant_rec) %>% -->
+<!--   summarise( -->
+<!--     count = n(), -->
+<!--     mean = mean(mod_startup, na.rm = TRUE), -->
+<!--     sd = sd(mod_startup, na.rm = TRUE) -->
+<!--   ) -->
+
+<!-- boxplot(mod_startup~migrant_rec, data=core_peri, notch=TRUE, -->
+<!--   main="Mod-startup capital by migrant recency", xlab="migrant recency", ylim = c(0, 30000)) -->
+
+<!-- ``` -->
+<!-- ## Mod-startup capital by education -->
+<!-- ```{r, echo= FALSE} -->
+
+<!-- group_by(core_peri, var_33) %>% -->
+<!--   summarise( -->
+<!--     count = n(), -->
+<!--     mean = mean(mod_startup, na.rm = TRUE), -->
+<!--     sd = sd(mod_startup, na.rm = TRUE) -->
+<!--   ) -->
+
+<!-- boxplot(mod_startup~var_33, data=core_peri, notch=TRUE, -->
+<!--   main="Mod-startup capital by education", xlab="education", ylim = c(0, 30000)) -->
+
+<!-- ``` -->
